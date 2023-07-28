@@ -6,7 +6,7 @@ const sequelize = new Sequelize({
   username: process.env.DATA_BASE_USER_NAME,
   password: process.env.DATA_BASE_PASSWORD,
   host: process.env.DATA_BASE_HOST,
-  port: 4000, // Change this to your MySQL port if different
+  port: 4000,
   dialect: 'mysql',
   dialectOptions: {
     ssl: {
@@ -30,23 +30,3 @@ module.exports = sequelize;
     console.error('Error connecting to the database:', error);
   }
 })();
-
-// const connection = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "postman@1A",
-//     database: "my_database",
-//   });
-//   console.log(connection)
-//   const query = util.promisify(connection.query).bind(connection);
-  // connection.connect((err) => {
-  //   if (err) {
-  //     console.error("Error connecting to database: ", err);
-  //   } else {
-  //     console.log("Database connection successful");
-  //   }
-  // });
-
-  // exports.defult={
-  //   connection,query
-  // };
