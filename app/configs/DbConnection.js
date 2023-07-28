@@ -1,33 +1,35 @@
-// const mysql = require("mysql");
-// const util = require("util");
-
-const mysql = require("mysql2");
-const util = require("util");
-
+const { Sequelize } = require('sequelize');
 require('dotenv').config();
-const connection = mysql.createConnection({
-  host: process.env.DATA_BASE_HOST,
-  user: process.env.DATA_BASE_USER_NAME,
-  password: process.env.DATA_BASE_PASSWORD,
+
+const sequelize = new Sequelize({
   database: process.env.DATA_BASE_NAME,
+  username: process.env.DATA_BASE_USER_NAME,
+  password: process.env.DATA_BASE_PASSWORD,
+  host: process.env.DATA_BASE_HOST,
+  port: 4000, // Change this to your MySQL port if different
+  dialect: 'mysql',
+  dialectOptions: {
+    ssl: {
+      minVersion: 'TLSv1.2',
+      rejectUnauthorized: true
+    }
+  },
 });
 
-const query = util.promisify(connection.query).bind(connection);
-  // console.log(connection)
+module.exports = sequelize;
 
-  connection.connect((err) => {
-      if (err) {
-        console.error("Error connecting to database: ", err);
-      } else {
-        console.log("Database connection successful");
-      }
-    });
-  
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Database connection successful');
 
-exports.default = { connection, query };
-
-
-
+    // You can synchronize the models with the database (creates the table if it doesn't exist)
+    // await sequelize.sync();
+    // console.log('Models synchronized with the database');
+  } catch (error) {
+    console.error('Error connecting to the database:', error);
+  }
+})();
 
 // const connection = mysql.createConnection({
 //     host: "localhost",

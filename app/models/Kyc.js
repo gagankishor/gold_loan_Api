@@ -1,41 +1,73 @@
-const { default: DbConnection, query } = require("../configs/DbConnection");
+const { DataTypes } = require('sequelize');
+const sequelize = require("../configs/DbConnection");
 
-const table = "kycupdate";
+exports.KycUpdate = sequelize.define('kycupdate', {
+  idkycupdate: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+  fname: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+  gender: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+  adhar: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+  pan: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+  bankname: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+  bankacn: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+  bankifse: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+  uphoto: {
+    type: DataTypes.TEXT('long'),
+  },
+  uadhar: {
+    type: DataTypes.TEXT('long'),
+  },
+  upan: {
+    type: DataTypes.TEXT('long'),
+  },
+  dob: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  phone: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  grossincom: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  Address: {
+    type: DataTypes.STRING(45),
+    allowNull: true,
+  },
+}, {
+  tableName: 'kycupdate',
+  timestamps: false, // If you want timestamps, change this to true
+  // Other model options if needed
+});
 
-const save = async (data) => {
-    // data.is_exists = "Y";
-  
-    await DbConnection.query("INSERT INTO `" + table + "` SET ?", [data]);
-    // const values = [add_name, email, phone, password];
-    // return true;)
-  };
-
-const getdata =async() =>{
-    console.log("kyc Data Feached")
-    return await DbConnection.query("SELECT * FROM `" + table + "`")
-};
-const getonedata =async(id) =>{
-    console.log("kyc one Data Feached")
-     
-    let data = await DbConnection.query("SELECT * FROM `" + table + "` where `idkycupdate`= " + id)
-    return data[0]
-};
-const updatedata =async(data,id) =>{
-    
-    
-    
-    await DbConnection.query(`UPDATE ` + table + ` SET ?  WHERE idkycupdate = ${id}`, [data])
-    console.log(" Data Updated")
-    // console.log("kyc one Data Feached")
-}    
-
-
-
-exports.default = {
-    
-    save,
-    getdata,
-    getonedata,
-    updatedata
-    
-};

@@ -1,41 +1,54 @@
-const { default: Kyc } = require("../models/Kyc");
-
+const { KycUpdate } = require("../models/Kyc");
 const store = async (req, res) => {
-  console.log("body", req.body);
-
-  await Kyc.save(req.body);
-
-  res.send({ msg: "data inserted" });
+  try {
+    console.log("body", req.body);
+    await KycUpdate.create(req.body);
+    res.send({ msg: "data inserted" });
+  } catch (error) {
+    console.error('Error storing Kyc data:', error);
+    res.status(500).send({ error: 'An error occurred while storing Kyc data.' });
+  }
 };
+
 const index = async (req, res) => {
-  // console.log("body", req.body);
-
-  let data =await Kyc.getdata();
-
-  res.send(data);
+  try {
+    const data = await KycUpdate.findAll();
+    res.send(data);
+  } catch (error) {
+    console.error('Error fetching Kyc data:', error);
+    res.status(500).send({ error: 'An error occurred while fetching Kyc data.' });
+  }
 };
+
 const onedata = async (req, res) => {
-  // console.log("body", req.body);
-  const id = req.params.id;
-  let data =await Kyc.getonedata(id);
-
-  res.send(data);
+  try {
+    const id = req.params.id;
+    const data = await KycUpdate.findByPk(id);
+    res.send(data);
+  } catch (error) {
+    console.error('Error fetching Kyc data:', error);
+    res.status(500).send({ error: 'An error occurred while fetching Kyc data.' });
+  }
 };
+
 const update = async (req, res) => {
-  // console.log("body", req.body);
-  console.log(req.body)
-  console.log(req.params.id)
-  const id = req.params.id;
-  const data = req.body;
-  await Kyc.updatedata(data,id)
-
-  res.send({ msg: "data updated" });
+  try {
+    const idkycupdate
+    = req.params.id;
+    const data = req.body;
+    console.log(idkycupdate
+      )
+    await KycUpdate.update(data, { where: { idkycupdate } });
+    res.send({ msg: "data updated" });
+  } catch (error) {
+    console.error('Error updating Kyc data:', error);
+    res.status(500).send({ error: 'An error occurred while updating Kyc data.' });
+  }
 };
 
-
-exports.default={
+exports.default = {
   index,
   store,
   onedata,
   update
-}
+};

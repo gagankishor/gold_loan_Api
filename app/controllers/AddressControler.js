@@ -1,40 +1,51 @@
-const { default: Address } = require("../models/Address");
+const State = require('../models/state');
+const City = require('../models/city');
 
 const statestore = async (req, res) => {
+  try {
     console.log("body", req.body);
-  
-    // await Kyc.save(req.body);
-    await Address.statesave(req.body)
-  
+    await State.create(req.body);
     res.send({ msg: "data inserted" });
-  };
-  const stateindex = async (req, res) => {
-    // console.log("body", req.body);
-  
-    let data =await Address.stategetdata();
-  
-    res.send(data);
-  };
+  } catch (error) {
+    console.error('Error storing state:', error);
+    res.status(500).send({ error: 'An error occurred while storing state.' });
+  }
+};
 
- 
-  const citystore = async (req, res) => {
-    console.log("body", req.body);
-  
-    // await Kyc.save(req.body);
-    await Address.citysave(req.body)
-  
-    res.send({ msg: "data inserted" });
-  };
-  const cityindex = async (req, res) => {
-    // console.log("body", req.body);
-  
-    let data =await Address.citygetdata();
-  
+const stateindex = async (req, res) => {
+  try {
+    const data = await State.findAll();
     res.send(data);
-  };
-  exports.default = {
-    cityindex,
-    citystore,
-    stateindex,
-    statestore
-}
+  } catch (error) {
+    console.error('Error fetching states:', error);
+    res.status(500).send({ error: 'An error occurred while fetching states.' });
+  }
+};
+
+const citystore = async (req, res) => {
+  try {
+    console.log("body", req.body);
+    await City.create(req.body);
+    res.send({ msg: "data inserted" });
+  } catch (error) {
+    console.error('Error storing city:', error);
+    res.status(500).send({ error: 'An error occurred while storing city.' });
+  }
+};
+
+const cityindex = async (req, res) => {
+  try {
+    const data = await City.findAll();
+    res.send(data);
+  } catch (error) {
+    console.error('Error fetching cities:', error);
+    res.status(500).send({ error: 'An error occurred while fetching cities.' });
+  }
+};
+
+exports.default = {
+  cityindex,
+  citystore,
+  stateindex,
+  statestore,
+};

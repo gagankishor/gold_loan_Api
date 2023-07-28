@@ -1,7 +1,14 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require("../configs/DbConnection");
- exports.User = sequelize.define('users', {
-  name: {
+
+const AllUser = sequelize.define('alluser', {
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  add_name: {
     type: DataTypes.STRING(45),
     allowNull: true,
   },
@@ -9,14 +16,18 @@ const sequelize = require("../configs/DbConnection");
     type: DataTypes.STRING(45),
     allowNull: true,
   },
+  phone: {
+    type: DataTypes.STRING(12),
+    allowNull: true,
+  },
   password: {
     type: DataTypes.STRING(45),
     allowNull: true,
   },
 }, {
-  tableName: 'users',
+  tableName: 'alluser',
   timestamps: false, // If you want timestamps, change this to true
   // Other model options if needed
 });
 
-// module.exports = User;
+module.exports = AllUser;
