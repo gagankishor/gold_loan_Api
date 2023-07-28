@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require("../configs/DbConnection");
-const State = require('./state');
+const State = require('./State');
 const City = sequelize.define('city', {
   id: {
     type: DataTypes.INTEGER,

@@ -1,5 +1,5 @@
-const State = require('../models/state');
-const City = require('../models/city');
+const State = require('../models/State');
+const City = require('../models/City');
 
 const statestore = async (req, res) => {
   try {
